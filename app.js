@@ -16,12 +16,13 @@ app.get('/', function (req, res) {
   res.send('<h1>Hello World!</h1>')
 })
 
-app.get('/db', async (req, res) => {
+app.get('/dbcreate', async (req, res) => {
   try {
     const client = await pool.connect();
-    const result = await client.query('SELECT * FROM test_table');
-    const results = { 'results': (result) ? result.rows : null};
-    res.render('pages/db', results );
+    const result = await client.query('create table message_table (id integer, content text)');
+    console.log(result);
+    // const results = { 'results': (result) ? result.rows : null};
+    // res.render('pages/db', results );
     client.release();
   } catch (err) {
     console.error(err);
