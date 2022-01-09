@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>eg messenger</title>
+    <link rel="icon" type="image/png" href="https://cdn.discordapp.com/avatars/695662672687005737/1df262cf976b36df54ab8d19198da17e.png">
+</head>
+<body>
+    <h1 style="text-align:center;">Message Board</h1>
+	<div id="messages" style="text-align:center;">
+		messages from other people will appear here!
+	</div>
+	<div>
+		<label for="name">Your name:</label>
+    	<input type="text" id="name" name="name"><br><br>
+    	<label for="msg">Type a message:</label>
+    	<input type="text" id="msg" name="message"><br><br>
+	</div>
+	<div>
+		<button type="button" onclick="messageSent(document.getElementById('msg').value, document.getElementById('name').value)">Send!</button>
+	</div>
+	<script>
+		async function messageSent(msg, author) {
+			const webhookParams = JSON.stringify({
+        		embeds: [
+        			{
+						author: {
+							name: 'Some name',
+							icon_url: 'https://i.imgur.com/AfFp7pu.png',
+							url: 'https://discord.js.org',
+						},
+            			title: `"${msg}"`
+          			}
+        		]
+      		});
+			const something = await fetch2('https://discord.com/api/webhooks/929510885477728296/ISU8hLzTZCbKDW5RStiGGKijtGybu3Pvobzqub7wLXdElooT67SburiVTVuC51GqJiuv?wait=true', {
+				method: 'POST',
+				body: JSON.stringify({ content: `**${author}**: ${msg}` }),
+				headers: {
+					'Content-Type': 'application/json',
+				}
+			});
+			console.log(something);
+			setTimeout(async () =>{
+				const something2 = await fetch2(`https://discord.com/api/webhooks/929510885477728296/ISU8hLzTZCbKDW5RStiGGKijtGybu3Pvobzqub7wLXdElooT67SburiVTVuC51GqJiuv/messages/${something.id}`, {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+					}
+				});
+				console.log(something2);
+				const storedMessages = something2.content.split('\n');
+				console.log(storedMessages);
+				document.getElementById('messages').innerText = storedMessages.join('\n\n');
+			}, 2500);
+		}
+        async function fetch2(url, options) {
+            const raw = await fetch(url, options);
+            return await raw.json();
+        }
+		function generateRandomString() {
+			let randomString = '';
+			const randomNumber = Math.floor(Math.random() * 10);
+
+			for (let i = 0; i < 20 + randomNumber; i++) {
+				randomString += String.fromCharCode(33 + Math.floor(Math.random() * 94));
+			}
+
+			return randomString;
+		}
+
+		window.onload = async () => {
+			
+		}
+	</script>
+</body>
+</html>
