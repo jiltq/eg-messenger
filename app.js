@@ -1,7 +1,7 @@
 const express = require('express');
 const fetch = require('node-fetch');
 
-const webhookId = '932666422444838922';
+const webhookURL = 'https://discord.com/api/webhooks/932666422444838922/CGadoK8f1WPNiN64ADX6EdF_uLKzeDPiCf1z-VSeuoi5RMaI2SX53dtomIx-eRo2gwXc';
 
 const app = express()
 
@@ -21,12 +21,7 @@ app.get('/egpointpurchase', async function (req, res) {
     data: req.query
   }
 
-  const { url } = await fetch(`https://discord.com/api/webhooks/${webhookId}`, {
-	  method: 'get',
-	  headers: {'Content-Type': 'application/json'}
-  }).then(response => response.json());
-
-  const response = await fetch(`${url}?wait=true`, {
+  const response = await fetch(`${webhookURL}?wait=true`, {
 	  method: 'post',
 	  body: JSON.stringify({ content: JSON.stringify(json2Send) }),
 	  headers: {'Content-Type': 'application/json'}
