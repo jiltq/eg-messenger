@@ -6,7 +6,7 @@ const app = express()
 app.use(express.static('public'));
 
 app.get('/', function (req, res) {
-  res.send('<h1>Hello World!</h1>')
+  res.sendFile(`index.html`)
 });
 
 app.get('/egpointpurchase', async function (req, res) {
