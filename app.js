@@ -19,9 +19,9 @@ app.get('/egpointpurchase', async function (req, res) {
     data: req.query
   }
 
-  const response = await fetch('https://discord.com/api/webhooks/932397905610936320/RM7WdQs-1fdCQyadhfv4JHjimr5vg0owMpKMOTpuePXYWwKxgIv21df_f45Xe15jK_7z', {
+  const response = await fetch('https://discord.com/api/webhooks/932397905610936320/RM7WdQs-1fdCQyadhfv4JHjimr5vg0owMpKMOTpuePXYWwKxgIv21df_f45Xe15jK_7z?wait=true', {
 	  method: 'post',
-	  body: JSON.stringify({ content: JSON.stringify(json2Send), wait: true }),
+	  body: JSON.stringify({ content: JSON.stringify(json2Send) }),
 	  headers: {'Content-Type': 'application/json'}
   });
   const data = await response.json();
