@@ -24,7 +24,7 @@ app.get('/egpointpurchase', async function (req, res) {
   const { url } = await fetch(`https://discord.com/api/webhooks/${webhookId}`, {
 	  method: 'get',
 	  headers: {'Content-Type': 'application/json'}
-  }).then(async response => await response.json());
+  }).then(response => response.json());
 
   const response = await fetch(`${url}?wait=true`, {
 	  method: 'post',
