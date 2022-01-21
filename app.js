@@ -23,7 +23,21 @@ app.get('/egpointpurchase', async function (req, res) {
   });
   const data = await response.json();
   console.log(data);
-  res.send('close.html');
+  res.send('<script>window.close()</script>');
+});
+
+app.get('/linkbutton', async function (req, res) {
+  const json2Send = {
+    webhookSignalType: 'POST',
+    ...req.query
+  }
+
+  await fetch(`${req.query.webhookurl}?wait=true`, {
+	  method: 'post',
+	  body: JSON.stringify({ content: JSON.stringify(json2Send) }),
+	  headers: {'Content-Type': 'application/json'}
+  });
+  res.send('<script>window.close()</script>');
 });
 
 app.listen(process.env.PORT || 3000, () => console.log("Server is running..."));
