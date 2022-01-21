@@ -10,24 +10,22 @@ app.get('/', function (req, res) {
 });
 
 app.get('/egpointpurchase', async function (req, res) {
-  res.send('<h1>sending your request..</h1>')
   console.log(req.query);
 
   const json2Send = {
     webhookSignalType: 'POST',
     context: 'egpointpurchase',
-    signalId: req.query.signalId,
     data: req.query
   }
 
-  const response = await fetch(`${webhookURL}?wait=true`, {
+  const response = await fetch(`${req.query.webhookurl}?wait=true`, {
 	  method: 'post',
 	  body: JSON.stringify({ content: JSON.stringify(json2Send) }),
 	  headers: {'Content-Type': 'application/json'}
   });
   const data = await response.json();
   console.log(data);
-  res.send('close.html');
+  res.send('<script>window.close()</script>');
 });
 
 app.listen(process.env.PORT || 3000, () => console.log("Server is running..."));
