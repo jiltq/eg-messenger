@@ -1,8 +1,6 @@
 const express = require('express');
 const fetch = require('node-fetch');
 
-const webhookURL = 'https://discord.com/api/webhooks/932710078719598672/BIm7q0U5nJF38ga4VxUWs0gwfebNjQ9zhLZ0t8cTWEAULSjjHE5Ht7pc7vBR64oloyYf';
-
 const app = express()
 
 app.get('/', function (req, res) {
@@ -25,7 +23,7 @@ app.get('/egpointpurchase', async function (req, res) {
   });
   const data = await response.json();
   console.log(data);
-  res.send('<script>window.close()</script>');
+  res.send('close.html');
 });
 
 app.listen(process.env.PORT || 3000, () => console.log("Server is running..."));
