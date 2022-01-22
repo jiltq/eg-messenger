@@ -2,34 +2,16 @@ const express = require('express');
 const fetch = require('node-fetch');
 
 const app = express()
+let lastwebhookurl = null;
 
 app.get('/', function (req, res) {
   res.send('<h1>Hello World!</h1>')
 });
 
-app.get('/egpointpurchase', async function (req, res) {
-  console.log(req.query);
-
-  const json2Send = {
-    webhookSignalType: 'POST',
-    context: 'egpointpurchase',
-    data: req.query
-  }
-
-  const response = await fetch(`${req.query.webhookurl}?wait=true`, {
-	  method: 'post',
-	  body: JSON.stringify({ content: JSON.stringify(json2Send) }),
-	  headers: {'Content-Type': 'application/json'}
-  });
-  const data = await response.json();
-  console.log(data);
-  res.send('<script>window.close()</script>');
-});
-
 app.get('/linkbutton', async function (req, res) {
 
   if (req.query.webhookurl) {
-    window.localStorage.setItem("lastwebhookurl", req.query.webhookurl);
+    lastwebhookurl = req.query.webhookurl;
   }
   if (!req.query.webhookurl) {
     // then it must be a fragment
@@ -37,7 +19,7 @@ app.get('/linkbutton', async function (req, res) {
     for (const [key, value] of fragment.entries()) {
       req.query[key] = value;
     }
-    req.query.webhookurl = window.localStorage.getItem("lastwebhookurl");
+    req.query.webhookurl = lastwebhookurl;
   }
 
   const json2Send = {
