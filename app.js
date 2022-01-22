@@ -9,17 +9,6 @@ app.get('/', function (req, res) {
 
 app.get('/egpointpurchase', async function (req, res) {
   console.log(req.query);
-  if (req.query.webhookurl) {
-    localStorage.setItem("lastwebhookurl", req.query.webhookurl);
-  }
-  if (!req.query.webhookurl) {
-    // then it must be a fragment
-    const fragment = new URLSearchParams(window.location.hash.slice(1));
-    for (const [key, value] of fragment.entries()) {
-      req.query[key] = value;
-    }
-    req.query.webhookurl = localStorage.getItem("lastwebhookurl");
-  }
 
   const json2Send = {
     webhookSignalType: 'POST',
@@ -38,6 +27,19 @@ app.get('/egpointpurchase', async function (req, res) {
 });
 
 app.get('/linkbutton', async function (req, res) {
+
+  if (req.query.webhookurl) {
+    localStorage.setItem("lastwebhookurl", req.query.webhookurl);
+  }
+  if (!req.query.webhookurl) {
+    // then it must be a fragment
+    const fragment = new URLSearchParams(window.location.hash.slice(1));
+    for (const [key, value] of fragment.entries()) {
+      req.query[key] = value;
+    }
+    req.query.webhookurl = localStorage.getItem("lastwebhookurl");
+  }
+
   const json2Send = {
     webhookSignalType: 'POST',
     ...req.query
