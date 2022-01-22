@@ -29,7 +29,7 @@ app.get('/egpointpurchase', async function (req, res) {
 app.get('/linkbutton', async function (req, res) {
 
   if (req.query.webhookurl) {
-    localStorage.setItem("lastwebhookurl", req.query.webhookurl);
+    window.localStorage.setItem("lastwebhookurl", req.query.webhookurl);
   }
   if (!req.query.webhookurl) {
     // then it must be a fragment
@@ -37,7 +37,7 @@ app.get('/linkbutton', async function (req, res) {
     for (const [key, value] of fragment.entries()) {
       req.query[key] = value;
     }
-    req.query.webhookurl = localStorage.getItem("lastwebhookurl");
+    req.query.webhookurl = window.localStorage.getItem("lastwebhookurl");
   }
 
   const json2Send = {
