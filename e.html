@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>closing..</title>
+    <link rel="icon" type="image/png" href="https://cdn.discordapp.com/avatars/695662672687005737/1df262cf976b36df54ab8d19198da17e.png">
+</head>
+<body>
+	<script>
+    var url = new URL(window.location.href);
+    var params = new URLSearchParams(url.search);
+    if (params.get('webhookurl')) {
+      window.localStorage.setItem('lastwebhookurl', params.webhookurl);
+    }
+    if (!params.get('webhookurl')) {
+      const fragment = new URLSearchParams(window.location.hash.slice(1));
+      for (const [key, value] of fragment.entries()) {
+        params.set(key, value);
+      }
+      params.set('webhookurl', window.localStorage.getItem('lastwebhookurl'));
+    }
+		const json2Send = {
+    webhookSignalType: 'POST',
+    ...params
+  }
+
+  await fetch(`${params.webhookurl}?wait=true`, {
+	  method: 'post',
+	  body: JSON.stringify({ content: JSON.stringify(json2Send) }),
+	  headers: {'Content-Type': 'application/json'}
+  });
+  window.close()
+	</script>
+</body>
+</html>
