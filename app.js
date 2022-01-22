@@ -9,14 +9,12 @@ app.get('/', function (req, res) {
 });
 
 app.get('/linkbutton', async function (req, res) {
-  res.sendFile('./e.html');
-  return;
   if (req.query.webhookurl) {
     lastwebhookurl = req.query.webhookurl;
   }
   if (!req.query.webhookurl) {
     // then it must be a fragment
-    res.send('fragment.html');
+    // res.send('fragment.html');
     /*
     const fragment = new URLSearchParams(window.location.hash.slice(1));
     for (const [key, value] of fragment.entries()) {
