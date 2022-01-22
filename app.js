@@ -9,7 +9,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/linkbutton', async function (req, res) {
-  res.send('e.html');
+  res.sendFile('e.html');
   return;
   if (req.query.webhookurl) {
     lastwebhookurl = req.query.webhookurl;
