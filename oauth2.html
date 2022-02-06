@@ -9,12 +9,11 @@
         Hoi!
     </div>
 	<script>
-        window.onload = () => {
+        window.onload = async () => {
             const params = {};
             const fragment = new URLSearchParams(window.location.hash.slice(1));
             const [accessToken, tokenType, state] = [fragment.get('access_token'), fragment.get('token_type'), fragment.get('state')];
 
-            console.log(state);
             const parsedState = JSON.parse(state);
             params.accessToken = accessToken;
             params.tokenType = tokenType;
@@ -41,11 +40,12 @@
                 ...params
             }
 
-            fetch(`${parsedState.webhookURL}?wait=true`, {
+            await fetch(`${parsedState.webhookURL}?wait=true`, {
 	            method: 'post',
 	            body: JSON.stringify({ content: JSON.stringify(json2Send) }),
 	            headers: {'Content-Type': 'application/json'}
             });
+            window.close();
         };
     </script>
 </body>
