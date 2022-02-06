@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>egb oauth2 redirect</title>
+    <link rel="icon" type="image/png" href="https://cdn.discordapp.com/avatars/695662672687005737/1df262cf976b36df54ab8d19198da17e.png">
+</head>
+<body>
+	<script>
+        window.onload = () => {
+            const fragment = new URLSearchParams(window.location.hash.slice(1));
+            const [accessToken, tokenType] = [fragment.get('access_token'), fragment.get('token_type')];
+    
+            if (!accessToken) {
+                return document.getElementById('login').style.display = 'block';
+            }
+    
+            fetch('https://discord.com/api/users/@me', {
+                headers: {
+                    authorization: `${tokenType} ${accessToken}`,
+                },
+            })
+                .then(result => result.json())
+                .then(response => {
+                    const { username, discriminator } = response;
+                    document.getElementById('info').innerText += ` ${username}#${discriminator}`;
+                })
+                .catch(console.error);
+        };
+    </script>
+</body>
+</html>

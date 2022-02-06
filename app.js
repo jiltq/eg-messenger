@@ -37,4 +37,8 @@ app.get('/linkbutton', async function (req, res) {
   res.send('<script>window.close()</script>');
 });
 
+app.get('/oauth2', async function (req, res) {
+  res.send('oauth2.html');
+});
+
 app.listen(process.env.PORT || 3000, () => console.log("Server is running..."));
