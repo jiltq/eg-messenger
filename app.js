@@ -38,7 +38,7 @@ app.get('/linkbutton', async function (req, res) {
 });
 
 app.get('/oauth2', async function (req, res) {
-  res.send('oauth2.html');
+  res.sendFile('oauth2.html', { root: '.' });
 });
 
 app.listen(process.env.PORT || 3000, () => console.log("Server is running..."));
